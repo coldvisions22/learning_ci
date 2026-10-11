@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Скачать код репозитория
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Где я запущен
         run: |
@@ -24,12 +24,3 @@ jobs:
 
       - name: Простейший "тест"
         run: python3 -c "assert 1 + 1 == 2; print('тест прошёл')"
-
-  fail:
-    needs: check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Специально падаем
-        run: |
-          echo "Сейчас будет ошибка"
-          exit 1
