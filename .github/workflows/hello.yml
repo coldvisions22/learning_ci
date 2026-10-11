@@ -1,0 +1,35 @@
+name: hello
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Скачать код репозитория
+        uses: actions/checkout@v4
+
+      - name: Где я запущен
+        run: |
+          echo "Привет из CI!"
+          uname -a
+          whoami
+          echo "Событие: $GITHUB_EVENT_NAME, ветка: $GITHUB_REF_NAME, коммит: $GITHUB_SHA"
+
+      - name: Что лежит в репозитории
+        run: ls -la
+
+      - name: Простейший "тест"
+        run: python3 -c "assert 1 + 1 == 2; print('тест прошёл')"
+
+  fail:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Специально падаем
+        run: |
+          echo "Сейчас будет ошибка"
+          exit 1
